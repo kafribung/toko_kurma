@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Login Corona</title>
+    <title>Register Corona</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -36,16 +36,32 @@
             <div class="wrap-login100">
                 <div class="login100-form-title" style="background-image: url( {{asset('log/images/bg-01.jpg')}} );">
                     <span class="login100-form-title-1">
-						Login Dandi
+						Register Covid-19
 					</span>
                 </div>
 
-                <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
+                @if (session('msg'))
+                    <p class="alert alert-danger">{{session('msg')}}</p>
+                @endif
+
+                <form class="login100-form validate-form" method="POST" action="{{ route('register') }}">
                     @csrf
 
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Name</span>
+                        <input class="input100" type="text"  @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="off" autofocus placeholder="Enter username">
+                        <span class="focus-input100"></span>
+
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
                         <span class="label-input100">Email</span>
-                        <input class="input100" type="text"  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" autofocus placeholder="Enter username">
+                        <input class="input100" type="email"  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off"  placeholder="Enter email">
                         <span class="focus-input100"></span>
 
                         @error('email')
@@ -54,6 +70,7 @@
                             </span>
                         @enderror
                     </div>
+
 
                     <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
                         <span class="label-input100">Password</span>
@@ -67,27 +84,22 @@
                         @enderror
                     </div>
 
-                    <div class="flex-sb-m w-full p-b-30">
-                        <div class="contact100-form-checkbox">
-                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            <label class="label-checkbox100" for="ckb1">
-								Remember me
-							</label>
-                        </div>
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                        <span class="label-input100">Confirm Password</span>
+                        <input class="input100" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm password">
+                        <span class="focus-input100"></span>
 
-                        <div>
-
-                            @if (Route::has('password.request'))
-                                    <a class="txt1" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                            @endif
-                        </div>
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
+
 
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">
-                            {{ __('Login') }}
+                            {{ __('Register') }}
                         </button>
                     </div>
                 </form>

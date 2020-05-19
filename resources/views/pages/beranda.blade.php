@@ -27,9 +27,9 @@
         @foreach ($kurmas as $kurma)
             
         <div class="row d-flex">
-            <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+            <div class="col-sm-12 d-flex align-items-stretch ftco-animate">
                 <div class="blog-entry d-md-flex">
-                    <a href="blog-single.html" class="block-20 img" style="background-image: url({{ url($kurma->img) }} );"></a>
+                    <a href="blog-single.html" class="block-20 img" style="background-image: url({{ url($kurma->img) }} ); "></a>
                     <div class="text p-4 bg-light">
                         <div class="meta">
                             <p><span class="fa fa-calendar"></span> {{$kurma->created_at->format('d M y')}}</p>
@@ -39,6 +39,20 @@
                             {!! Str::limit($kurma->deskripsi, 200) !!}
                         </div>
                         <a href="/beranda/{{$kurma->slug}}" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+                        <br>
+
+
+                        @if ($kurma->author())
+                            
+                            <a href="/beranda/{{$kurma->slug}}/edit" class="btn btn-warning btn-sm">Edit</a>
+
+                            <form action="/beranda/{{$kurma->id}}" method="POST" class="d-inline-flex">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Delete {{$kurma->negara}}')" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+
+                        @endif
 
                     </div>
                 </div>
@@ -48,17 +62,7 @@
         </div>
         <div class="row mt-5">
             <div class="col text-center">
-                <div class="block-27">
-                    <ul>
-                        <li><a href="#">&lt;</a></li>
-                        <li class="active"><span>1</span></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&gt;</a></li>
-                    </ul>
-                </div>
+                {{$kurmas->links()}}
             </div>
         </div>
     </div>

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+// Import yg login
+use Auth;
+
 class Kurma extends Model
 {
    protected $touches = ['user'];
@@ -19,5 +22,16 @@ class Kurma extends Model
    public function getImgAttribute($value)
    {
       return url('kurma', $value);
+   }
+
+   // Author
+   public function author()
+   {
+      $user = Auth::user();
+      if (Auth::check()) {
+         if ($user->id == $this->user_id) 
+            return true;
+          else return abort('403', 'Anda Bukan Ownernya');
+      } else return false;
    }
 }

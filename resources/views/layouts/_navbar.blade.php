@@ -10,7 +10,9 @@
             </div>
             <div class="col-md-6 d-flex justify-content-md-end">
                 <div class="reg">
-                    <p class="mb-0"><a href="/register" class="mr-2">Sign Up</a> <a href="/login">Log In</a></p>
+                    <p class="mb-0"><a href="/login">Log In</a>
+                        <a class="ml-2">{{Auth::check() ? Auth::user()->name : ''}}</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -29,6 +31,10 @@
                     <li class="nav-item {{Request()->is('beranda') ? 'active' : ''}}"><a href="/" class="nav-link">Beranda</a></li>
                     <li class="nav-item {{Request()->is('about') ? 'active' : ''}}"><a href="/about" class="nav-link">About</a></li> 
                     <li class="nav-item {{Request()->is('beranda/create') ? 'active' : ''}}"><a href="/beranda/create" class="nav-link">Add Data</a></li>
+                    <li class="nav-item {{Request()->is('logout') ? 'active' : ''}}"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit();" class="nav-link">Logout</a></li>
+                    <form id="logout" action="{{ route('logout') }}" method="POST" class="display-none">
+                        @csrf
+                    </form>
                 @endguest
                 
             </ul>

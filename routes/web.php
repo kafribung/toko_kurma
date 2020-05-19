@@ -27,6 +27,6 @@ Route::resource('/beranda', 'BerandaController')->only(['index', 'show']);
 
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');

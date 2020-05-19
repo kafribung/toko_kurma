@@ -16,7 +16,7 @@ class BerandaController extends Controller
     // READ
     public function index()
     {
-        $kurmas = Kurma::orderBy('id', 'DESC')->paginate(6);
+        $kurmas = Kurma::orderBy('id', 'DESC')->paginate(4);
         return view('pages.beranda', compact('kurmas'));
     }
 
@@ -54,38 +54,44 @@ class BerandaController extends Controller
         return view('pages.show_beranda', compact('kurma'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    // EDIT
+    public function edit($slug)
     {
-        //
+        $kurma = Kurma::where('slug', $slug)->first();
+
+        return view('pages.edit_beranda', compact('kurma'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //UPDATE
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'negara'   => ['required', 'string', 'min:3', 'max:50'],
+            'img'      => ['mimes:png,jpg,jpeg'],
+            'deskripsi'=> ['required']
+        ]);
+
+        $data['slug'] = Str::slug($request->negara);
+
+        if ($request->has('img')) {
+            $img      = $request->file('img');
+            $name_img = time() . '.' . $img->getClientOriginalExtension();
+            $img->move(public_path('kurma'), $name_img);
+
+            $data['img'] = $name_img;
+        }
+
+        Kurma::findOrFail($id)->update($data);
+
+        return redirect('/beranda')->with('msg', 'Data Berhasil dirubah');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // DELETE
     public function destroy($id)
     {
-        //
+        Kurma::destroy($id);
+
+        return redirect('/beranda')->with('msg', 'Data Berhasil dihapus');
     }
 
     public function about()
