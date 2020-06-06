@@ -21,6 +21,6 @@ class Admin
             if ($user->role == 1)
                 return $next($request);
             else return abort('403', 'Anda Bukan Admin');
-        else return abort('404');
+        else return abort('403', 'Anda Harus Login');
     }
 }

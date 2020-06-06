@@ -25,8 +25,14 @@ Route::group(['middleware' => 'admin'], function () {
 Route::get('/about', 'BerandaController@about');
 Route::resource('/beranda', 'BerandaController')->only(['index', 'show']);
 
+// Tanpa Login
+Route::get('/beranda/create/no-log', 'BerandaController@create');
+Route::post('/beranda', 'BerandaController@store');
 
 
-Auth::routes(['register' => false]);
+
+
+
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

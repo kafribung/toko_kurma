@@ -11,12 +11,14 @@ use Illuminate\Support\Str;
 // Import DB Kurma
 use App\Models\Kurma;
 
+use Auth;
+
 class BerandaController extends Controller
 {
     // READ
     public function index()
     {
-        $kurmas = Kurma::orderBy('id', 'DESC')->paginate(4);
+        $kurmas = Kurma::with('user')->orderBy('id', 'DESC')->paginate(4);
         return view('pages.beranda', compact('kurmas'));
     }
 
@@ -41,7 +43,13 @@ class BerandaController extends Controller
             $data['img'] = $name_img;
         }
 
-        $request->user()->kurmas()->create($data);
+        // $request->user()->kurmas()->create($data);
+
+        if (Auth::check()) {
+            $data['user_id'] = Auth::user()->id;
+        } else $data['user_id'] = 1;
+        
+        Kurma::create($data);
 
         return redirect('/beranda')->with('msg', 'Data berhasil ditambhakan');
     }

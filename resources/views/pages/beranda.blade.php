@@ -33,6 +33,8 @@
                     <div class="text p-4 bg-light">
                         <div class="meta">
                             <p><span class="fa fa-calendar"></span> {{$kurma->created_at->format('d M y')}}</p>
+                            <p>Ditulis Oleh :<span class="fa fa-user"></span> {{$kurma->user->name}}</p>
+
                         </div>
                         <h3 class="heading mb-3"><a href="/beranda/{{$kurma->slug}}">{{$kurma->negara}}</a></h3>
                         <div>

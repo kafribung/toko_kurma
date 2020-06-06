@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Login Corona</title>
+    <title>Login Dandi</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -40,31 +40,27 @@
 					</span>
                 </div>
 
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <p class="alert alert-danger">{{$error}}</p>
+                    @endforeach   
+                @endif
+
                 <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
                     @csrf
 
-                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                    <div class="wrap-input100 validate-input m-b-26">
                         <span class="label-input100">Email</span>
-                        <input class="input100" type="text"  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" autofocus placeholder="Enter username">
+                        <input class="input100" type="text"  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="off" autofocus placeholder="Enter username">
                         <span class="focus-input100"></span>
 
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                     </div>
 
-                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                    <div class="wrap-input100 validate-input m-b-18">
                         <span class="label-input100">Password</span>
-                        <input class="input100" type="password" @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Enter password">
+                        <input class="input100" type="password" @error('password') is-invalid @enderror" name="password"  autocomplete="current-password" placeholder="Enter password">
                         <span class="focus-input100"></span>
 
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                     </div>
 
                     <div class="flex-sb-m w-full p-b-30">

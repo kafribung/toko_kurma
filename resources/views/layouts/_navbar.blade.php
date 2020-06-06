@@ -13,6 +13,7 @@
                     <p class="mb-0"><a href="/login">Log In</a>
                         <a class="ml-2">{{Auth::check() ? Auth::user()->name : ''}}</a>
                     </p>
+
                 </div>
             </div>
         </div>
@@ -27,10 +28,13 @@
                 @guest
                     <li class="nav-item {{Request()->is('beranda') ? 'active' : ''}}"><a href="/" class="nav-link">Beranda</a></li>
                     <li class="nav-item {{Request()->is('about') ? 'active' : ''}}"><a href="/about" class="nav-link">About</a></li>  
+                    <li class="nav-item {{Request()->is('beranda/create') ? 'active' : ''}}"><a href="/beranda/create" class="nav-link">Add_Data[Log]</a></li>
+                    <li class="nav-item {{Request()->is('beranda/create/no-log') ? 'active' : ''}}"><a href="/beranda/create/no-log" class="nav-link">Add_Data[NoLog]</a></li>
+                    <li class="nav-item {{Request()->is('register') ? 'active' : ''}}"><a href="/register" class="nav-link">Register</a></li>
                 @else
                     <li class="nav-item {{Request()->is('beranda') ? 'active' : ''}}"><a href="/" class="nav-link">Beranda</a></li>
                     <li class="nav-item {{Request()->is('about') ? 'active' : ''}}"><a href="/about" class="nav-link">About</a></li> 
-                    <li class="nav-item {{Request()->is('beranda/create') ? 'active' : ''}}"><a href="/beranda/create" class="nav-link">Add Data</a></li>
+                    <li class="nav-item {{Request()->is('beranda/create') ? 'active' : ''}}"><a href="/beranda/create" class="nav-link">Add_Data[Log]</a></li>
                     <li class="nav-item {{Request()->is('logout') ? 'active' : ''}}"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit();" class="nav-link">Logout</a></li>
                     <form id="logout" action="{{ route('logout') }}" method="POST" class="display-none">
                         @csrf

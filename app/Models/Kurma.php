@@ -29,9 +29,7 @@ class Kurma extends Model
    {
       $user = Auth::user();
       if (Auth::check()) {
-         if ($user->id == $this->user_id) 
-            return true;
-          else return abort('403', 'Anda Bukan Ownernya');
+         return $user->id == $this->user_id;
       } else return false;
    }
 }
